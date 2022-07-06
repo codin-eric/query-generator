@@ -1,23 +1,72 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/static.css') }}">
-    <script src="{{ url_for('static', filename='js/code.js') }}"></script>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"
+        type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder/dist/js/query-builder.standalone.min.js"></script>
+    <script src="{{ url_for('static', filename='js/code.js') }}"></script>
 </head>
 
+
 <body>
-    <div id="container-timer">
-        7
-    </div>
-    <div id="container">
-        <div id="success-box">
-            <img src="{{ img1 }}"></img>
+    <div class="devider">
+        <div class="row">
+            <div class="column">
+                <p>SELECT</p>
+            </div>
         </div>
-        <div id="error-box">
-            <img src="{{ img2 }}"></img>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="column">
+                <ul class="connected-sortable droppable-area1">
+                    {% for item in columns %}
+                    <li class="draggable-item">{{ item|safe }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="column">
+                <ul class="connected-sortable droppable-area2">
+                    <li class="draggable-item">date</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="devider">
+        <div class="row">
+            <div class="column">
+                <p>Filters</p>
+            </div>
         </div>
     </div>
 
-    <footer>
-        <p>made by <a href="https://codepen.io/juliepark"> julie</a> ♡
-    </footer>
+    <div class="devider">
+        <div class="row">
+            <div id="builder"> </div>
+        </div>
+    </div>
+
+    <div class="devider">
+        <div class="row">
+            <div class="column">
+                <button class="btn btn-primary parse-json"> Apply</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="query">
+                <p></p>
+            </div>
+        </div>
+    </div>
+    <div class="devider">
+        <div class="row">
+            <div class="table">
+            </div>
+        </div>
+    </div>
 </body>

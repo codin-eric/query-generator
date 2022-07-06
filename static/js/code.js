@@ -1,52 +1,54 @@
-var lclicks = 0;
-var rclicks = 0;
-var number = 0;
-var startTime = 7;
-var photosCount = 6;
-var interval;
-var timer = 7;
+$(init);
 
-function main() {
-  setTimeout(getImagePair, 1000);
-  setInterval(showCountDown, 1000);
-  interval = setInterval(getImagePair, timer * 1000);
+function init() {
+  $(".droppable-area1, .droppable-area2").sortable({
+    connectWith: ".connected-sortable",
+    stack: '.connected-sortable ul'
+  }).disableSelection();
 }
 
-function showCountDown() {
-  document.getElementById("container-timer").innerHTML = startTime--;
-}
+$(function () {
+  $('.btn').click(function () {
+    var str = ''
+    var value = $('.droppable-area2 li').each(function (i) {
+      str += $(this).html() + ",";
+    });
+    $(".query p").html("SELECT " + str + "<br>FROM table_name");
 
-function getImagePair() {
-  lclicks = 0;
-  rclicks = 0;
-  startTime = timer;
-  document.getElementById("left").innerHTML = lclicks;
-  document.getElementById("right").innerHTML = rclicks;
+    console.log(JSON.stringify(
+      $('#builder').queryBuilder('getRules'), undefined, 2
+    ));
 
-  document.getElementById("success-box").style.backgroundImage = "url('/static/img/" + number + ".png')"
-  document.getElementById("error-box").style.backgroundImage = "url('/static/img/" + (number + 1) + ".png')"
-  number += 2;
-  if (number > 6) {
-    clearTimeout(interval);
+    $.post('/table', str, function (response) {
+      $(".table").html(response);
+    });
+  });
+});
+
+$(document).ready(function () {
+  var options = {
+    allow_empty: true,
+
+    filters: [
+      {
+        id: 'name',
+        label: 'Name',
+        type: 'string',
+        default_value: 'asdf',
+        size: 30,
+        unique: true
+      },
+      {
+        id: 'date',
+        label: 'date',
+        type: 'date',
+        default_value: 'asdf',
+        size: 30,
+        unique: true
+      },
+
+    ]
   }
-}
 
-function onLeft() {
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", 'http://192.168.86.234:5000/counter', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(JSON.stringify({
-    url: 0
-  }));
-};
-
-function onRight() {
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", 'http://192.168.86.234:5000/counter', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(JSON.stringify({
-    url: 1
-  }));
-};
-
-main();
+  $('#builder').queryBuilder(options);
+});
