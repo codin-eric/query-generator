@@ -18,20 +18,32 @@
             </div>
         </div>
     </div>
+    <div class="devider">
+        <div class="row">
+            <label class="btn-xs btn-primary">
+                <input id="selectAll" type="checkbox" name="selectAll" value="selectAll"> Select/Clear All
+            </label>
+        </div>
+    </div>
+    <div class="devider">
+
+        <div class="row">
+            Templates
+            <select class="form" name="form">
+                <option value="date">---</option>
+                <option value="date">one</option>
+                <option value="country">two</option>
+                <option value="country_abbr">tree</option>
+            </select>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
-            <div class="column">
-                <ul class="connected-sortable droppable-area1">
-                    {% for item in columns %}
-                    <li class="draggable-item">{{ item|safe }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-
-            <div class="column">
-                <ul class="connected-sortable droppable-area2">
-                    <li class="draggable-item">date</li>
-                </ul>
+            <div class="select">
+                {% for item in columns %}
+                <input type="checkbox" name={{ item|safe }} value={{ item|safe }}>
+                <label for={{ item|safe }}>{{ item|safe }}</label><br>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -52,7 +64,10 @@
     <div class="devider">
         <div class="row">
             <div class="column">
-                <button class="btn btn-primary parse-json"> Apply</button>
+                <button class="btn btn-primary parse-json apply"> Apply</button>
+                <a class="download" download href="" hidden>
+                    <button class="btn btn-success parse-json"> Download</button>
+                </a>
             </div>
         </div>
     </div>

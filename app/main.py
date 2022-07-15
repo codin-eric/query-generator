@@ -21,15 +21,21 @@ def get_schema():
 
 @app.route('/table', methods=['POST'])
 def html_table():
-    print(request.values)
-
     query = json.loads([x for x in request.values][0])
     columns = query['select'].split(',')[:-1]
     return render_template('table.html',  tables=[df[columns].to_html(classes='data', index=False)], titles=df.columns.values)
 
 
+@app.route('/download', methods=['POST'])
+def donwload_file():
+    file_path = root / 'data.csv'
+    query = json.loads([x for x in request.values][0])
+    columns = query['select'].split(',')[:-1]
+    df[columns].to_csv(file_path, index=False)
+    return str(file_path)
+
 @app.route('/')
-def hello_world():
+def index():
     return render_template('index.html', columns=df.columns)
 
 
